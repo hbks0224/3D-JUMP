@@ -15,8 +15,20 @@ public class PlayerAction : MonoBehaviour
     public float jumpPower = 5f;
     
     public LayerMask groundLayerMask;
+
+    public Transform cameraContainer;
+    public float minXLook;  // 최소 시야각
+    public float maxXLook;  // 최대 시야각
+    private float camCurXRot;
+    public float lookSensitivity; // 카메라 민감도
+
+    private Vector2 mouseDelta;  // 마우스 변화값
+
+    [HideInInspector]
+    public bool canLook = true;
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked; //커서 숨기기
         // 현재 GameObject에서 Rigidbody 컴포넌트를 가져와서 저장
         rb = GetComponent<Rigidbody>();
     }
@@ -26,6 +38,34 @@ public class PlayerAction : MonoBehaviour
     {
         // 플레이어 이동 처리
         Move();
+    }
+
+    private void LateUpdate()
+    {
+        if (canLook)
+        {
+            CameraLook();
+        }
+    }
+
+    void CameraLook()
+    {
+        // 마우스 움직임의 변화량(mouseDelta)중 y(위 아래)값에 민감도를 곱한다.
+        // 카메라가 위 아래로 회전하려면 rotation의 x 값에 넣어준다. -> 실습으로 확인
+        camCurXRot += mouseDelta.y * lookSensitivity;
+        camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
+        cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
+
+        // 마우스 움직임의 변화량(mouseDelta)중 x(좌우)값에 민감도를 곱한다.
+        // 카메라가 좌우로 회전하려면 rotation의 y 값에 넣어준다. -> 실습으로 확인
+        // 좌우 회전은 플레이어(transform)를 회전시켜준다.
+        // Why? 회전시킨 방향을 기준으로 앞뒤좌우 움직여야하니까.
+        transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
+    }
+
+    public void OnLookInput(InputAction.CallbackContext context)
+    {
+        mouseDelta = context.ReadValue<Vector2>();
     }
 
     // 입력 시스템에서 이동 입력을 받을 때 호출되는 함수
