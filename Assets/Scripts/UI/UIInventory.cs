@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class UIInventory : MonoBehaviour
 {
@@ -13,13 +14,13 @@ public class UIInventory : MonoBehaviour
     public Transform InfoBg;
     [Header("Selected Item")]           // 선택한 슬롯의 아이템 정보 표시 위한 UI
     private ItemSlot selectedItem;
-    private int selectedItemIndex = -1;
+    private int selectedItemIndex = 0;
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
     private PlayerAction controller;
     private PlayerCondition condition;
 
-    private int curwheelSlotIndex = -1;
+    private int curwheelSlotIndex =01;
     void Start()
     {
 
@@ -66,13 +67,15 @@ public class UIInventory : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            Debug.Log("아이템 버림");
             ThrowItem(selectedItem.item);
-
+            
             RemoveSelctedItem();
 
         }
         if (selectedItem != null && Input.GetMouseButton(1))
         {
+            Debug.Log("아이템 사용");
             ItemUse();
         }
 
@@ -210,7 +213,8 @@ public class UIInventory : MonoBehaviour
 
     public void ThrowItem(ItemData data)
     {
-        Instantiate(data.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
+        GameObject droppedItem = Instantiate(data.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
+        droppedItem.layer = LayerMask.NameToLayer("Interactable");
     }
 
     public void SelectItem(int index)
@@ -252,7 +256,7 @@ public class UIInventory : MonoBehaviour
                         break;
 
                     case UseableType.Speed:
-                        condition.SpeedUp(selectedItem.item.usables[i].value);
+                        condition.SpeedUp(selectedItem.item.usables[i].value , 10f);
                         break;
 
 

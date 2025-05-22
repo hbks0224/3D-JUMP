@@ -12,7 +12,7 @@ public class PlayerAction : MonoBehaviour
     // Rigidbody 컴포넌트를 저장할 변수
     private Rigidbody rb;
 
-    public float jumpPower = 5f;
+    public float jumpPower = 200f;
     
     public LayerMask groundLayerMask;
 
@@ -26,6 +26,12 @@ public class PlayerAction : MonoBehaviour
 
     [HideInInspector]
     public bool canLook = true;
+
+
+
+
+
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked; //커서 숨기기
@@ -47,6 +53,25 @@ public class PlayerAction : MonoBehaviour
             CameraLook();
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("JumpBoat"))
+        {
+            Debug.Log("점프대");
+            Jumptest();
+
+        }
+    }
+    void Jumptest()
+    {
+        
+
+        rb.AddForce(transform.up * jumpPower, ForceMode.Impulse);
+
+    }
+
+
+
 
     void CameraLook()
     {
@@ -153,6 +178,8 @@ public class PlayerAction : MonoBehaviour
         return false; // 다 안 닿았으면 땅 위에 없음
 
     }
+
+
 
 
 

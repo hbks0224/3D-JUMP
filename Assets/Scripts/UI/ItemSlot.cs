@@ -40,8 +40,8 @@ public class ItemSlot : MonoBehaviour
         quatityText.text = string.Empty;
     }
 
-    public void OnClickButton()
-    {
-        inventory.SelectItem(index);
-    }
+    //public void OnClickButton()
+    //{
+    //    inventory.SelectItem(index);
+    //}
 }

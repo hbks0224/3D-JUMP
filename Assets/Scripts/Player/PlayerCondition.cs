@@ -6,9 +6,14 @@ public class PlayerCondition : MonoBehaviour
 {
     public UICondition uiCondition;
     public PlayerAction playerAction;
+    Coroutine coroutine;
+    float originSpeed;
     Condition health { get { return uiCondition.health; } }
     void Start()
     {
+
+        
+
 
     }
 
@@ -19,7 +24,7 @@ public class PlayerCondition : MonoBehaviour
 
         if (health.curValue == 0)
         {
-            Debug.Log("사망");
+            
 
         }
 
@@ -31,9 +36,43 @@ public class PlayerCondition : MonoBehaviour
         health.Add(amount);
 
     }
-    public void SpeedUp(float amount)
+    public void SpeedUp(float amount, float  duration)
     {
-        playerAction.speed += amount;
+        if (coroutine != null)
+        {
+
+            StopCoroutine(coroutine);
+            
+
+        }
+
+        coroutine = StartCoroutine(SpeedUpCoroutine(amount, duration));
+    }
+
+    IEnumerator SpeedUpCoroutine(float amout, float duration)
+    {
+
+        originSpeed = playerAction.speed;
+        playerAction.speed += amout;
+        Debug.Log("속도증가");
+        float curTime = duration;
+
+        while (curTime > 0)
+        {
+
+            curTime -=Time.deltaTime;
+            yield return null;
+
+        }
+
+
+        Debug.Log("속도감소");
+
+        playerAction.speed = originSpeed;
+        coroutine = null;
+
+
+
     }
 
 
