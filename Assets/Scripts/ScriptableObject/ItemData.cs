@@ -21,7 +21,7 @@ public enum UseableType
 public class ItemDataUsable 
 {
 
-    public ItemDataUsable type;
+    public UseableType type;
     public float value;
 
 }
@@ -36,6 +36,7 @@ public class ItemData : ScriptableObject
     public string displayName;
     public string description;
     //사용 아이템만 구현 예정
+    public Sprite icon;
     public ItemType type;
     public GameObject dropPrefab;
 

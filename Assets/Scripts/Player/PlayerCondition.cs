@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCondition : MonoBehaviour
 {
     public UICondition uiCondition;
+    public PlayerAction playerAction;
     Condition health { get { return uiCondition.health; } }
     void Start()
     {
@@ -22,6 +23,17 @@ public class PlayerCondition : MonoBehaviour
 
         }
 
+    }
+
+    public void Heal(float amount)
+    {
+
+        health.Add(amount);
+
+    }
+    public void SpeedUp(float amount)
+    {
+        playerAction.speed += amount;
     }
 
 
