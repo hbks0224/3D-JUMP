@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public PlayerCondition condition;
     public ItemData itemData;
     public Action addItem;
-    public Transform dropPosition;
+    public Transform dropPosition; //æ∆¿Ã≈€ ∂≥±º ¿ßƒ°
 
     private void Awake()
     {

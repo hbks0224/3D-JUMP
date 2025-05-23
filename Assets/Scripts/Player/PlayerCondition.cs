@@ -7,7 +7,7 @@ public class PlayerCondition : MonoBehaviour
     public UICondition uiCondition;
     public PlayerAction playerAction;
     Coroutine coroutine;
-    float originSpeed;
+    float originSpeed; //속도 저장될 변수
     Condition health { get { return uiCondition.health; } }
     void Start()
     {

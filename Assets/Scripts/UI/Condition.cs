@@ -31,7 +31,7 @@ public class Condition : MonoBehaviour
 
     public void Add(float value)
     {
-
+        
         curValue = Mathf.Min(curValue+ value,maxValue);
 
     }
