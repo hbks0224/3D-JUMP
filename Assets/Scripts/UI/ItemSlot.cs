@@ -16,8 +16,8 @@ public class ItemSlot : MonoBehaviour
     // 아이템의 개수를 표시할 텍스트
     public TextMeshProUGUI quatityText;
 
-    private Outline outline;
-
+    public Outline outline;
+    private Color originalOutlineColor; //아웃라인 색깔 저장할 변수
     // 인벤토리 슬롯의 인덱스
     public int index;
 
@@ -51,8 +51,23 @@ public class ItemSlot : MonoBehaviour
         
         icon.gameObject.SetActive(false);
 
-        quatityText.text = string.Empty; 
+        quatityText.text = string.Empty;
+        ResetOutlineColor(); //  슬롯이 비워질 때 아웃라인 색상을 원래대로 바꿈
+    }
+    public void SetOutlineColor(Color color)
+    {
+        if (outline != null)
+        {
+            outline.effectColor = color;
+        }
     }
 
+    public void ResetOutlineColor()
+    {
+        if (outline != null)
+        {
+            outline.effectColor = originalOutlineColor;
+        }
+    }
 
 }

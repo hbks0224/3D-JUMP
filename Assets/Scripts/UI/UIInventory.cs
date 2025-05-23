@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class UIInventory : MonoBehaviour
@@ -19,7 +20,7 @@ public class UIInventory : MonoBehaviour
     private ItemSlot selectedItem; // 현재 선택된 아이템 
     private int selectedItemIndex = 0; // 현재 선택된 아이템 슬롯의 인덱스
     public TextMeshProUGUI selectedItemName; 
-    public TextMeshProUGUI selectedItemDescription; 
+    public TextMeshProUGUI selectedItemDescription;
 
     
     private PlayerAction controller;
@@ -30,7 +31,7 @@ public class UIInventory : MonoBehaviour
 
     void Start()
     {
-        
+
         controller = CharacterManager.Instance.Player.controller;
         condition = CharacterManager.Instance.Player.condition;
         dropPosition = CharacterManager.Instance.Player.dropPosition;
@@ -240,8 +241,15 @@ public class UIInventory : MonoBehaviour
             return;
         }
 
+   
         selectedItem = slots[index]; // 현재 선택된 슬롯으로 설정
         selectedItemIndex = index; // 현재 선택된 인덱스로 설정
+
+        if (selectedItem != null)
+        {
+            selectedItem.SetOutlineColor(Color.red);
+        }
+
 
         // 선택된 아이템 정보창에 아이템 이름과 설명을 표시
         selectedItemName.text = selectedItem.item.displayName;
